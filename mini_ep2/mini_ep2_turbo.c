@@ -11,7 +11,6 @@ int main() {
     int primos = 0;
     int primos_especiais = 0;
     int *crivo;
-    // int odd;
 
     scanf("%d", &input);
 
