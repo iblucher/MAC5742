@@ -30,7 +30,6 @@ int main() {
     for(int i = 3; i <= N; i = i + 2) {
         if(crivo[i / 2] == 1) {
             primos++;
-            // odd = (i * 2) + 1;
             if(i % 4 != 3)
                 primos_especiais++;
             for(int j = i * 3; j <= N; j = j + (i * 2)) {
