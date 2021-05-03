@@ -1,6 +1,6 @@
 # miniEP1
 # Isabela Blucher, 9298170
-# python mini_ep1.py
+# python mini_ep2_turbo.py
 
 N = 1 << int(input())
 primos = 0
