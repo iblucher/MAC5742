@@ -1,0 +1,19 @@
+# Mini-EP 3
+
+- Só existem pontos positivos em usar flags de otimização? 
+Usando a flag "-pipe" o tempo de compilação piorou, logo, podemos ver que nesse caso não foi útil usar essa flag (aumento de 6 segundos na compilação, de 15s para 21s). 
+Tivemos um uso maior de memória sem o trade-off da compilação mais eficiente.
+Além disso, como mencionado na aula do Giuliano e neste link (https://wiki.gentoo.org/wiki/GCC_optimization#What_about_-O_levels_higher_than_3.3F), é importante entender o 
+funcionamento das flags e não usar cegamente qualquer tipo de otimização, já que pode não estar fazendo diferença nenhuma para o compilador (no link ele fala sobre o O4 ser 
+tratado da mesma forma que o O3 pelo compilador).
+
+Além disso, usar cegamente a otimização que ativa mais flags não necessariamente é a melhor opção. Por exemplo: usando a flag "-O2" neste mini EP, o tempo de compilação 
+é 15s e o tempo médio de execução é 21,31s. Já para a flag "-O3" o tempo de compilação é 20s e o tempo médio de execução é 20.11s. É preciso entender o contexto do problema
+e pesar se o aumento de 5s na compilação (~33%) vale a pena a diminuição média de 1s na execução (4%). 
+
+
+- As flags impactam apenas no tempo de execução e compilação? E o tamanho do binário gerado? Como eles se relacionam?
+As flags não impactam apenas nos tempos de execução e compilação. No caso deste mini EP, usando a flag "-O0" o tamanho do binário gerado foi 305,5kB e usando a flag 
+"-O2" o tamanho do binário gerado é 219,9kB. Usando a flag "-O3" o tamanho do binário é 274,7kB, que é maior em relação ao "-O2", mas aindam menor do que a versão sem otimização. 
+Compilar usando flags que dão informação de debug também podem aumentar o tamanho do executável. 
+Técnicas usadas pelas flags de otimização como loop-unrolling e function inlining tem o trade-off de aumentar o tamanho do binário final.
