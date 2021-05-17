@@ -30,11 +30,11 @@ const main = (data) => {
 
         let zx = 0;
         let zy = 0;
-        let steps = 0
+        let steps = 0;
 
         while(steps < 255) {
-            new_zx = zx * zx - zy * zy + x;
-            new_zy = 2 * zx * zy + y;
+            let new_zx = zx * zx - zy * zy + x;
+            let new_zy = 2 * zx * zy + y;
 
             zx = new_zx;
             zy = new_zy;
@@ -43,34 +43,14 @@ const main = (data) => {
                 break;
             }
 
-            steps++;
-        }
-
-        // ex: pintar de acordo com a distância do centro
-        // (a distância máxima para os Xi-Xj e Yi-Yj atuais é raiz de 2)
-        // (essa distância não é distância em si, eu sei)
-
-        // const distancia = (x*x + y*y)/2;
-
-        // transforma num número entre 0 e 255
-        // invertido para o meio ser branco
-        // const corrigido = 255 - steps * 255;
-
-        // para dar uma cor podemos variar a presença de verde pelo y
-        // e o de azul pelo x
-
-        // const fator_verde = (y+1)/2;
-        // const fator_azul = (x+1)/2;
-
-        // note que o próprio JS vai converter o número
-        // para um inteiro entre 0 e 255 ;)
+            steps++;            
+        }        
 
         const red = steps;
         const green = steps;
         const blue = steps;
 
-        //*****************************
-        
+
         //define a cor do pixel
         data[i]   = red;
         data[i+1] = green;
