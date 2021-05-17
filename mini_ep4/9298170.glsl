@@ -13,10 +13,10 @@ precision mediump float;
 #define HEIGHT (3000.0)
 
 // Constantes do limite do plano cartesiano
-#define Xi (-1.0)
+#define Xi (-2.0)
 #define Xj (+1.0)
-#define Yi (-1.0)
-#define Yj (+1.0)
+#define Yi (-1.5)
+#define Yj (+1.5)
 
 #define Xd (Xj - Xi)
 #define Yd (Yj - Yi)
@@ -38,9 +38,7 @@ void main() {
     float x = xy.x;
     float y = xy.y;
 
-    //****************************
     //compute a cor do pixel aqui
-
     float zx = 0.0;
     float zy = 0.0;
     int steps = 255; 
@@ -52,29 +50,69 @@ void main() {
          zx = new_zx;
          zy = new_zy;
 
-         if(zx*zx + zy*zx > 4.0) {
+         if(zx*zx + zy*zy > 4.0) {
             steps = i;
             break;
          }
     }
-   
-    // ex: pintar de acordo com a distância do centro
-    // usaremos a função help para ajudar a computar a distância
 
-    float distancia = (x*x + y*y)/2.0;
+    float step_A, step_B;
+    float red_A, red_B;
+    float green_A, green_B;
+    float blue_A, blue_B;
 
-    // invertido para o meio ser branco
-    float corrigido = 1.0 - distancia;
+    if(steps < 10) {
+        step_A = 0.0;
+        step_B = 10.0;
+        red_A = 0.0;
+        red_B = 32.0;
+        green_A = 7.0;
+        green_B = 107.0;
+        blue_A = 100.0;
+        blue_B = 203.0;
+    } else if(steps >= 10 && steps < 80) {
+        step_A = 10.0;
+        step_B = 80.0;
+        red_A = 32.0;
+        red_B = 237.0;
+        green_A = 107.0;
+        green_B = 255.0;
+        blue_A = 203.0;
+        blue_B = 255.0;
+    } else if(steps >= 80 && steps < 150) {
+        step_A = 80.0;
+        step_B = 150.0;
+        red_A = 237.0;
+        red_B = 255.0;
+        green_A = 255.0;
+        green_B = 170.0;
+        blue_A = 255.0;
+        blue_B = 0.0;
+    } else if(steps >= 150 && steps < 200) {
+        step_A = 150.0;
+        step_B = 200.0;
+        red_A = 255.0;
+        red_B = 100.0;
+        green_A = 170.0;
+        green_B = 120.0;
+        blue_A = 0.0;
+        blue_B = 0.0;
+    } else {
+        step_A = 200.0;
+        step_B = 255.0;
+        red_A = 100.0;
+        red_B = 0.0;
+        green_A = 120.0;
+        green_B = 0.0;
+        blue_A = 0.0;
+        blue_B = 0.0;
+    }
 
-    // para dar uma "cor" podemos variar a presença de verde pelo y
-    // e o de azul pelo x
-
-    float fator_verde = (xy.y+1.0)/2.0;
-    float fator_azul = (xy.x+1.0)/2.0;
-
-    float red = float(steps / 255);
-    float green = float(steps / 255);
-    float blue = float(steps / 255);
+    float pct = ((float(steps) - step_A) / (step_B - step_A));
+    
+    float red = sqrt(red_A * red_A * (1.0 - pct) + red_B * red_B * pct) / 255.0;
+    float green = sqrt(green_A * green_A * (1.0 - pct) + green_B * green_B * pct) / 255.0;
+    float blue = sqrt(blue_A * blue_A * (1.0 - pct) + blue_B * blue_B * pct) / 255.0;
 
     //*****************************
     // Aplica a cor

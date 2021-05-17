@@ -5,10 +5,10 @@ const WIDTH = 3000;
 const HEIGHT = 3000;
 
 // Constantes do limite o plano cartesiano
-const Xi = -1.0;
+const Xi = -2.0;
 const Xj = +1.0;
-const Yi = -1.0;
-const Yj = +1.0;
+const Yi = -1.5;
+const Yj = +1.5;
 
 const Xd = Xj - Xi;
 const Yd = Yj - Yi;
@@ -46,10 +46,59 @@ const main = (data) => {
             steps++;            
         }        
 
-        const red = steps;
-        const green = steps;
-        const blue = steps;
+        let step_A;
+        let step_B;
+        let red_A;
+        let red_B;
+        let green_A;
+        let green_B;
+        let blue_A;
+        let blue_B;
 
+        if(steps < 10) {
+            step_A = red_A = 0;
+            step_B = 10;
+            red_B = 32;
+            green_A = 7;
+            green_B = 107;
+            blue_A = 100;
+            blue_B = 203;
+        } else if(steps >= 10 && steps < 80) {
+            step_A = 10;
+            step_B = 80;
+            red_A = 32;
+            red_B = 237;
+            green_A = 107;
+            green_B = blue_B = 255;
+            blue_A = 203;
+        } else if(steps >= 80 && steps < 150) {
+            step_A = 80;
+            step_B = 150;
+            red_A = 237;
+            red_B = green_A = blue_A = 255;
+            green_B = 170;
+            blue_B = 0;
+        } else if(steps >= 150 && steps < 200) {
+            step_A = 150;
+            step_B = 200;
+            red_A = 255;
+            red_B = 100;
+            green_A = 170;
+            green_B = 120;
+            blue_A = blue_B = 0;
+        } else {
+            step_A = 200;
+            step_B = 255;
+            red_A = 100;
+            red_B = green_B = blue_A = blue_B = 0;
+            green_A = 120;
+        }
+
+        let pct = (steps - step_A) / (step_B - step_A);
+
+        const red = Math.sqrt(red_A * red_A * (1 - pct) + red_B * red_B * pct);
+        const green = Math.sqrt(green_A * green_A * (1 - pct) + green_B * green_B * pct);
+        const blue = Math.sqrt(blue_A * blue_A * (1 - pct) + blue_B * blue_B * pct);
 
         //define a cor do pixel
         data[i]   = red;
