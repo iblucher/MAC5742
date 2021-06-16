@@ -1,9 +1,10 @@
 // Nome: Isabela Blucher
 // NUSP: 9298170
-// NOPT: 13,293s
-// OPTM: 0.000s
+// NOPT: 11.237s
+// OPTM: 6.292s
 
 #include <stdio.h>
+#include <omp.h>
 
 #define N 100000000
 
@@ -14,20 +15,24 @@ long sum;
 int n[N];
 
 int main() {
-	#pragma omp parallel for shared(n)
+	#pragma omp parallel for shared(n) \
+		schedule(static, 1024)
 	for(int i = 0; i < N; i++)
 		n[i] = i+1;
 
-	#pragma omp parallel for shared(n)
+	#pragma omp parallel for shared(n) \
+		schedule(static, 1024)
 	for(int i = 0; i < N; i++)
 		computation1(n+i);
 
-	#pragma omp parallel for shared(n)
+	#pragma omp parallel for shared(n) \
+		schedule(dynamic, 128)
 	for(int i = 0; i < N; i++)
 		computation2(n+i);
 
 	sum = 0;
-	#pragma omp parallel for reduction(+: sum)
+	#pragma omp parallel for reduction(+: sum) \
+		schedule(dynamic, 128)
 	for(int i = 0; i < N; i++)
 		sum += computation3(n[i]);
 
