@@ -1,6 +1,6 @@
-// Nome: Your Name Here
-// NUSP: Your NUSP Here
-// NOPT: 0,000s
+// Nome: Isabela Blucher
+// NUSP: 9298170
+// NOPT: 13,293s
 // OPTM: 0.000s
 
 #include <stdio.h>
