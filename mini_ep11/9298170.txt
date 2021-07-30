@@ -1,0 +1,27 @@
+# Nome: Isabela Blucher
+# NUSP: 9298170
+
+O código com a última modificação (somar apenas 1) teve a execução mais lenta 
+(646ms) do que todas as outras execuções, que ficaram na faixa dos 602ms a 605ms. 
+O conceito de warp divergence pode explicar este aumento no tempo, pois 
+nas versões anteriores do código tanto o if, quanto o else, estavam chamando a mesma 
+função sqrt. No último caso, o if e o else executam instruções diferentes, e a plataforma 
+CUDA vai executar estas instruções de forma sequencial e não paralela, 
+o que resulta em uma perda de performance do programa.
+
+## Tempos de execução (executado na Rede Linux)
+
+if não modificado
+---
+Average cudaTime 603ms
+Average cudaIfTime 602ms
+
+Raiz +1
+---
+Average cudaTime 602ms
+Average cudaIfTime 605ms
+
+Apenas +1
+---
+Average cudaTime 602ms
+Average cudaIfTime 646ms

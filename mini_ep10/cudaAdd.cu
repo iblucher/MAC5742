@@ -58,18 +58,15 @@ long seqSum(int *refs, int *res) {
 
 __global__ void cudaSumGPU(int *ints) {
 
-	int index = threadIdx.x;
-	int stride = blockDim.x;
+	int tid = threadIdx.x;
+    int stride = blockDim.x;
 
-	int sum = 0;
-    for(int i = index; i < SIZE*SIZE; i += stride){
-		sum += ints[i];
-		if(i % SIZE == 0 && i > 0) {
-			*(ints + (SIZE * SIZE) + (i / SIZE)) = sum;
-			sum = 0;
-		}
-	}
-	
+    int sum = 0;
+    for (int i = tid; i < SIZE*SIZE; i += stride) {
+    	sum += ints[i];
+    }
+
+  	ints[(SIZE * SIZE) + tid] = sum;
 }
 
 long cudaSum(int *refs, int *res) {
